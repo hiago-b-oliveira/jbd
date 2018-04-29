@@ -1,9 +1,12 @@
 package io.jbd.weblogin.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class UserAccount {
+public class UserAccount implements Serializable {
+
+    public static final String CACHE_NAME = "users";
 
     private Long id;
     private String login;
