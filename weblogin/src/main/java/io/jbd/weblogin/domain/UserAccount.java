@@ -10,6 +10,7 @@ public class UserAccount implements Serializable {
 
     private Long id;
     private String login;
+    private String password;
     private String name;
     private String email;
     private Date registerDate;
@@ -53,6 +54,14 @@ public class UserAccount implements Serializable {
 
     public void setRegisterDate(Date registerDate) {
         this.registerDate = registerDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

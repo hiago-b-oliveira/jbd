@@ -30,4 +30,19 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/weblogin/login")
+    public String login2() {
+        return "forward:/login"; // TODO: limitação do encaminhamento do Zuul
+    }
+
+    @GetMapping("/access-denied")
+    public String accesDenied() {
+        return "access-denied";
+    }
+
 }

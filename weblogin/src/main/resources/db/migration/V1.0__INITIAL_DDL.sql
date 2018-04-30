@@ -1,6 +1,7 @@
 create table user_account (
   id            bigint                  not null,
   login         varchar(32) unique      not null,
+  password      varchar(32)             not null,
   name          varchar(64)             not null,
   email         varchar(32)             not null,
   register_date timestamp default now() not null,
