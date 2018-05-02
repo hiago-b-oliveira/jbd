@@ -26,7 +26,6 @@ public class RewriteUrlFilterConfiguration {
 
         registration.addInitParameter("statusEnabled", "false");
         registration.addInitParameter("modRewriteConfText", String.format("\nRewriteRule /%s(/.*) $1\n", applicationName));
-        registration.addInitParameter("loglevel", "DEBUG");
 
 
         return registration;
