@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Map;
 
 @Controller
@@ -20,12 +21,13 @@ public class HomeController {
     private UserAccountDAO userAccountDAO;
 
     @GetMapping("/home")
-    public String home(@RequestParam("login") String login, Map<String, Object> model) {
-        logger.trace("Executing home with param: {}", login);
+    public String home(Principal principal, HttpSession httpSession, Map<String, Object> model) {
+        logger.trace("Executing home with principal: {}", principal.getName());
 
-        UserAccount userAccount = userAccountDAO.findByLogin(login);
+        UserAccount userAccount = userAccountDAO.findByLogin(principal.getName());
 
         model.put("user", String.valueOf(userAccount));
+        model.put("token", httpSession.getId());
 
         return "home";
     }
@@ -35,14 +37,8 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/weblogin/login")
-    public String login2() {
-        return "forward:/login"; // TODO: limitação do encaminhamento do Zuul
-    }
-
     @GetMapping("/access-denied")
     public String accesDenied() {
         return "access-denied";
     }
-
 }

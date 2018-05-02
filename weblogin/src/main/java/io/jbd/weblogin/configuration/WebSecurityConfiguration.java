@@ -3,6 +3,7 @@ package io.jbd.weblogin.configuration;
 import io.jbd.weblogin.dao.UserAccountDAO;
 import io.jbd.weblogin.domain.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,34 +25,47 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserAccountDAO userAccountDAO;
 
+    @Value("${spring.application.name}")
+    private String applicationName;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+
                 .authorizeRequests()
-                .antMatchers("/weblogin/login", "/login").permitAll()
-                .antMatchers("**/actuator/**").hasRole("ADMIN")
+                .antMatchers("/login", "/access-denied").permitAll()
+                .antMatchers("/actuator/*").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
 
                 .exceptionHandling()
-                .accessDeniedPage("/access-denied")
+                .accessDeniedPage(buildPagePath("access-denied"))
                 .and()
 
                 .formLogin()
-                .loginPage("/weblogin/login")
+                .loginPage(buildPagePath("login"))
                 .loginProcessingUrl("/login")
                 .usernameParameter("login")
                 .passwordParameter("password")
-                .failureUrl("/weblogin/login?error=1")
+                .failureUrl(buildPagePath("login?error=1"))
+                .defaultSuccessUrl(buildPagePath("home"), true)
                 .permitAll()
                 .and()
 
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl(buildPagePath("login?logout"))
                 .invalidateHttpSession(true)
                 .permitAll();
+    }
+
+    /**
+     * When using a service behind zuul (reverse proxy), we get the a url like this: {proxy hostname}/{service name}/{service requested path}.
+     * Because of it, we have to use the application name (service name) in the paths for redirect
+     */
+    private String buildPagePath(String path) {
+        return String.format("/%s/%s", this.applicationName, path);
     }
 
     @Override
