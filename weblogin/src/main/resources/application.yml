@@ -14,8 +14,8 @@ spring:
     host: localhost
 
 server:
-  port: 8100
-  #port=${PORT:${SERVER_PORT:0}}
+#  port: 8100
+  port: ${SERVER_PORT:8100}
 
 management:
   security:

@@ -1,5 +1,20 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<h1>Aqui</h1><br/>
-<span th:text="${user}"></span>
-<span th:text="${token}"></span>
+
+<head>
+    <title>Home</title>
+</head>
+<body>
+<h1>Bem Vindo, <span th:text="${user.name}"></span>!</h1><br/>
+
+<p>
+    Sua requisição está sendo atendida pelo servidor: <strong th:text="${instanceId}"></strong>, atualize a página e veja se você será
+    atendido por
+    um outro servidor.
+    <br/>
+    Id da sua sessão atual: <strong th:text="${token}"></strong>
+</p>
+<p>
+    <a th:href="@{./logout}">Clique aqui para fazer logout</a>
+</p>
+</body>
 </html>

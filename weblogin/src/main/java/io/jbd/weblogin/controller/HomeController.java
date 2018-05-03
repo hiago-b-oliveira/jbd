@@ -5,6 +5,7 @@ import io.jbd.weblogin.domain.UserAccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -17,6 +18,9 @@ public class HomeController {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
+    @Value("${eureka.instance.instanceId}")
+    private String instanceId;
+
     @Autowired
     private UserAccountDAO userAccountDAO;
 
@@ -26,8 +30,9 @@ public class HomeController {
 
         UserAccount userAccount = userAccountDAO.findByLogin(principal.getName());
 
-        model.put("user", String.valueOf(userAccount));
+        model.put("user", userAccount);
         model.put("token", httpSession.getId());
+        model.put("instanceId", instanceId);
 
         return "home";
     }
