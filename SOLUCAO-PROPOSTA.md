@@ -78,11 +78,12 @@ No endereço [http://localhost:9100/](http://localhost:9100/) é possível visua
 
 Existem ainda algumas urls que dizem bastante sobre a aplicação (urls do spring actuator disponíveis em todos os módulos): 
 
-* [http://localhost:9100/actuator/health](http://lost:9100/actuator/health)
+* [http://localhost:9100/actuator/health](http://localhost:9100/actuator/health)
 * [http://localhost:9100/actuator/metrics](http://localhost:8080/actuator/metrics)
 * [http://localhost:8080/actuator/trace](http://localhost:8080/actuator/metrics)
 * [http://localhost:8080/weblogin/actuator/auditevents](http://localhost:8080/weblogin/actuator/auditevents)*
 
 Obs: ao acessar as urls `/weblogin/actuator/*` não é possível determinar que qual das instâncias de weblogin as informações pertencem. 
+
 Obs2: após subir todos os módulos o api-gateway pode levar até 1min30s para registrar todas as instâncias de weblogin. Este atraso ocorre devido 
 ao tempo dos "heart beats" do Eureka Server. 
