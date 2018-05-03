@@ -79,7 +79,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     throw new UsernameNotFoundException("User does not exists");
                 }
 
-                if (!Objects.equals(userAccount.getPassword(), String.valueOf(authentication.getCredentials()))) {
+                if (Objects.equals(userAccount.getPassword(), String.valueOf(authentication.getCredentials()))) {
                     return new UsernamePasswordAuthenticationToken(userAccount.getLogin(), null, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
                 } else {
                     throw new BadCredentialsException("Wrong password");

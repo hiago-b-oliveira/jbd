@@ -39,6 +39,7 @@ public class UserAccountDAO {
         UserAccount ua = new UserAccount();
         ua.setId(rs.getLong("id"));
         ua.setLogin(rs.getString("login"));
+        ua.setPassword(rs.getString("password"));
         ua.setName(rs.getString("name"));
         ua.setEmail(rs.getString("email"));
         ua.setRegisterDate(rs.getDate("register_date"));
