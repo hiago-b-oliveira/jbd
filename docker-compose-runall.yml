@@ -1,0 +1,45 @@
+redis:
+  image: redis
+  expose:
+    - "6379"
+
+postgres:
+  image: postgres
+  expose:
+    - "5432"
+
+eureka:
+  image: jbd/eureka-server
+  expose:
+    - "9100"
+  ports:
+    - "9100:9100"
+
+weblogin_1:
+  image: jbd/weblogin
+  links:
+    - eureka
+    - postgres
+    - redis
+  expose:
+    - "8100"
+
+weblogin_2:
+  image: jbd/weblogin
+  links:
+    - eureka
+    - postgres
+    - redis
+  expose:
+    - "8100"
+
+apigateway:
+  image: jbd/api-gateway
+  links:
+    - eureka
+    - postgres
+    - redis
+    - weblogin_1
+    - weblogin_2
+  ports:
+    - "8080:8080"

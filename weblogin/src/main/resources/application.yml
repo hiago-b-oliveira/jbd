@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: weblogin
+  session:
+    store-type: redis
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password:
+    driver-class-name: org.postgresql.Driver
+    testWhileIdle: true
+    validationQuery: SELECT 1
+  redis:
+    host: localhost
+
+server:
+  port: 8100
+  #port=${PORT:${SERVER_PORT:0}}
+
+management:
+  security:
+    enabled: false
+  context-path: /actuator
+
+eureka:
+  instance:
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.int(1,9999)}}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9100/eureka/
+
+logging:
+  level:
+    io.jbd: TRACE
+
+
+---
+spring:
+  profiles: docker
+  datasource:
+    url: jdbc:postgresql://postgres:5432/postgres
+  redis:
+    host: redis
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:9100/eureka/
