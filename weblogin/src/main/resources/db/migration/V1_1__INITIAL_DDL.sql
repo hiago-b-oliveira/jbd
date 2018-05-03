@@ -18,4 +18,5 @@ create table user_role (
 
   primary key (user_id, role),
   foreign key (user_id) references user_account (id)
-)
+);
+

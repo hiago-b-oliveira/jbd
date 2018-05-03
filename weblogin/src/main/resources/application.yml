@@ -33,7 +33,6 @@ logging:
   level:
     io.jbd: TRACE
 
-
 ---
 spring:
   profiles: docker
@@ -45,3 +44,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://eureka:9100/eureka/
+flyway:
+  locations: db/migration,db/test-data
+  validate-on-migrate: true

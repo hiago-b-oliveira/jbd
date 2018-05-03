@@ -1,0 +1,1 @@
+-- Just let flyway create the schema_version table

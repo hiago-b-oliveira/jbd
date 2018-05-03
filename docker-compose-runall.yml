@@ -15,6 +15,16 @@ eureka:
   ports:
     - "9100:9100"
 
+apigateway:
+  image: jbd/api-gateway
+  links:
+    - eureka
+    - weblogin_1
+    - weblogin_2
+    - weblogin_3
+  ports:
+    - "8080:8080"
+
 weblogin_1:
   image: jbd/weblogin
   links:
@@ -33,13 +43,11 @@ weblogin_2:
   expose:
     - "8100"
 
-apigateway:
-  image: jbd/api-gateway
+weblogin_3:
+  image: jbd/weblogin
   links:
     - eureka
     - postgres
     - redis
-    - weblogin_1
-    - weblogin_2
-  ports:
-    - "8080:8080"
+  expose:
+    - "8100"
