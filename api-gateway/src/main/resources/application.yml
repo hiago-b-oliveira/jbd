@@ -1,0 +1,28 @@
+management:
+  security:
+    enabled: false
+  context-path: /actuator
+
+spring:
+  application:
+    name: api-gateway
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9100/eureka/
+
+zuul:
+  sensitive-headers:
+  add-host-header: true
+
+
+---
+spring:
+  profiles: docker
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:9100/eureka/
